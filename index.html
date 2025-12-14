@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Product list with cart</title>
+  <link rel="stylesheet" href="./css/main.css"/>
+</head>
+<body>
+  <main>
+    <h1>Desserts</h1>
+    <section class="grid">
+      <template id="grid-elem">
+        <div class="item">
+          <div class="item__pic">
+            <img src="./assets/images/image-waffle-mobile.jpg" alt="image-waffle-tablet" class="mobile">
+            <img src="./assets/images/image-waffle-tablet.jpg" alt="image-waffle-tablet" class="tab">
+            <img src="./assets/images/image-waffle-desktop.jpg" alt="image-waffle-tablet" class="desktop">
+            <div class="item__button">
+              <input type="checkbox" name="tick" id="tick" class="cart-checkbox">
+              <label for="tick" class="cart-label">
+                <img src="./assets/images/icon-add-to-cart.svg"/>
+                <span>Add to cart</span>
+              </label>
+              <div class="counter">
+                <button id="remove"><img src="./assets/images/icon-decrement-quantity.svg" alt="icon-decrement-quantity"/></button>
+                <span class="amount">1</span>
+                <button id="add"><img src="./assets/images/icon-increment-quantity.svg" alt="icon-increment-quantity"/></button>
+              </div>
+            </div>
+          </div>
+          <div class="item__description">
+            <p class="item__description__category">Waffle</p>
+            <h3 class="item__description__name">Waffle with Berries</h3>
+            <div class="item__description__price">$6.50</div>
+          </div>
+        </div>
+      </template>
+    </section>
+    <section class="cart">
+      <h2>Your Cart (0)</h2>
+      <div class="cart__items">
+        <template id="cartItemTemplate">
+          <div class="cart__item">
+            <div class="cart__item__description">
+              <h4>Item Name</h4>
+              <span class="cart__item__description__times">Xx</span>
+              <div class="cart__item__description__price">@$0.00</div>
+              <div class="cart__item__description__times-price">$0.00</div>
+            </div>
+            <button class="cart__item__remove">
+              <img src="./assets/images/icon-remove-item.svg" alt="remove-btn"/>
+            </button>
+          </div>
+        </template>
+      </div>
+      <div class="cart__order">
+        <span class="cart__order__label">Order Total</span>
+        <span class="cart__order__price">$46.50</span>
+      </div>
+      <div class="cart__tip">
+        <img src="./assets/images/icon-carbon-neutral.svg" alt="icon-carbon-neutral">
+        <span class="cart__tip__text">This is a <b>carbon-neutral</b> delivery</span>
+      </div>
+      <button class="confirm__order">Confirm Order</button>
+      <div class="no__order">
+        <img src="./assets/images/illustration-empty-cart.svg" alt="" class="cake-pic">
+        <p>Your added items will appear here</p>
+      </div>
+    </section>
+  </main>
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
+    Coded by <a href="https://ehiejakhian.github.io/">Ehi Ejakhian</a>.
+  </div>
+
+  <script src="./fetch.js" defer></script>
+  <script src="./main.js" type="module" defer></script>
+</body>
+</html>

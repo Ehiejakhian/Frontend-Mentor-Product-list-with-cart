@@ -1,0 +1,345 @@
+:root {
+  --red: hsl(14, 86%, 42%);
+  --green: hsl(159, 69%, 38%);
+  --rose-50: hsl(20, 50%, 98%);
+  --rose-100: hsl(13, 31%, 94%);
+  --rose-300: hsl(14, 25%, 72%);
+  --rose-400: hsl(7, 20%, 60%);
+  --rose-500: hsl(12, 20%, 44%);
+  --rose-900: hsl(14, 65%, 9%);
+}
+
+@font-face {
+  font-family: "Red Hat";
+  src: url("../../assets/fonts/RedHatText-VariableFont_wght.ttf");
+}
+.grid {
+  display: flex;
+  justify-content: normal;
+  align-items: normal;
+  flex-flow: column;
+  gap: 30px;
+}
+@media (min-width: 600px) {
+  .grid {
+    display: grid;
+    grid-template-columns: subgrid;
+  }
+}
+
+.item {
+  max-width: 100%;
+  position: relative;
+}
+.item__pic {
+  position: relative;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  gap: 0;
+}
+.item__pic img {
+  border-radius: inherit;
+}
+.item__button {
+  color: #000;
+  position: absolute;
+  height: 45px;
+  bottom: 0;
+  transform: translateY(50%);
+  width: 200px;
+  height: 50px;
+  position: absolute;
+}
+.item__button label, .item__button .counter {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 25px;
+}
+.item__button label {
+  border: 1px solid var(--rose-300);
+  cursor: pointer;
+  background: #fff;
+  z-index: 1;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row;
+  gap: 10px;
+}
+.item__button label img {
+  display: inline-block;
+  width: auto;
+  border-radius: 0;
+  height: 25px;
+  border: none;
+}
+.item__button label:hover {
+  color: var(--red);
+}
+.item__button .counter {
+  transform: translateY(100%);
+  transition: all 0.3s;
+  width: 100%;
+  padding: 0 20px;
+  background-color: var(--red);
+  color: #fff;
+  opacity: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row;
+  gap: 10px;
+}
+.item__button .counter.counter-ON {
+  transform: translateY(0%);
+  z-index: 2;
+  width: 100%;
+  opacity: 100%;
+}
+.item__button .counter > button {
+  width: 20px;
+  height: 20px;
+  background-color: inherit;
+  color: inherit;
+  border: 1px solid;
+  padding: 2px;
+  border-radius: 50%;
+  transition: all 0.3s;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row;
+  gap: 0;
+}
+.item__button .counter > button:hover {
+  transform: scale(1.05);
+}
+.item__button [id*=tick] {
+  display: none;
+}
+.item__description {
+  margin-top: 40px;
+  line-height: 1;
+  display: flex;
+  justify-content: normal;
+  align-items: normal;
+  flex-flow: column;
+  gap: 10px;
+}
+.item__description__category {
+  color: var(--rose-300);
+}
+.item__description__name {
+  font-weight: 600;
+}
+.item__description__price {
+  color: var(--red);
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.cart {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: normal;
+  align-items: normal;
+  flex-flow: column;
+  gap: 20px;
+}
+.cart h2 {
+  color: var(--red);
+}
+.cart__item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--rose-300);
+}
+.cart__item__description h4 {
+  width: 100%;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+.cart__item__description__times {
+  margin: 0 15px 0 0;
+  font-weight: 600;
+  color: var(--red);
+}
+.cart__item__description__price {
+  display: inline-block;
+  color: var(--rose-400);
+  margin: 0 5px 0 0;
+}
+.cart__item__description__times-price {
+  color: var(--rose-400);
+  font-weight: 600;
+  display: inline-block;
+}
+.cart__item__remove {
+  border: 2px solid;
+  color: var(--rose-300);
+  background: transparent;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.cart__order {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: row;
+  gap: 10px;
+}
+.cart__order__price {
+  font-size: 2rem;
+  font-weight: 700;
+}
+.cart__order.hidden {
+  display: none;
+}
+.cart__tip {
+  background-color: var(--rose-100);
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: row;
+  gap: 10px;
+}
+.cart__tip img {
+  width: auto;
+}
+.cart__tip.hidden {
+  display: none;
+}
+.cart .confirm__order {
+  font: inherit;
+  padding: 20px;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--red);
+  border: none;
+  cursor: pointer;
+  border-radius: 50px;
+}
+.cart .confirm__order.hidden {
+  display: none;
+}
+.cart .no__order {
+  display: none;
+}
+.cart .no__order.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  gap: 20px;
+}
+.cart .no__order img {
+  width: auto;
+}
+.cart .no__order p {
+  font-weight: 600;
+  color: var(--rose-500);
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Red Hat";
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+img.tab, img.desktop {
+  display: none;
+}
+@media (min-width: 600px) and (max-width: 850px) {
+  img.tab {
+    display: block;
+  }
+  img.mobile, img.desktop {
+    display: none;
+  }
+}
+@media (min-width: 850px) {
+  img.desktop {
+    display: block;
+  }
+  img.mobile, img.tab {
+    display: none;
+  }
+}
+
+body {
+  background-color: var(--rose-50);
+}
+
+main {
+  margin: 40px 20px;
+  display: flex;
+  justify-content: normal;
+  align-items: normal;
+  flex-flow: column;
+  gap: 20px;
+}
+@media (min-width: 600px) {
+  main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  main > * {
+    grid-column: 1/-1;
+  }
+}
+@media (min-width: 850px) {
+  main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  main {
+    place-self: center;
+    display: grid;
+    grid-template-columns: 250px 250px 250px minmax(300px, 1fr);
+    grid-template-rows: 3rem auto auto;
+    grid-auto-flow: dense;
+    gap: 30px 40px;
+  }
+  main > h1, main .grid {
+    grid-column: span 3;
+  }
+  main .cart {
+    grid-column: span 1;
+    grid-row: span 2;
+    height: auto;
+  }
+}
+
+.attribution {
+  font-size: 11px;
+  text-align: center;
+}
+.attribution a {
+  color: hsl(228, 45%, 44%);
+}/*# sourceMappingURL=main.css.map */

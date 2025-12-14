@@ -1,0 +1,34 @@
+
+
+$mobile: 375px;
+$mini-tab: 600px;
+$big-tab: 850px;
+$desktop: 1200px;
+
+:root {
+  --red: hsl(14, 86%, 42%);
+  --green: hsl(159, 69%, 38%);
+  
+  --rose-50: hsl(20, 50%, 98%);
+  --rose-100: hsl(13, 31%, 94%);
+  --rose-300: hsl(14, 25%, 72%);
+  --rose-400: hsl(7, 20%, 60%);
+  --rose-500: hsl(12, 20%, 44%);
+  --rose-900: hsl(14, 65%, 9%);
+}
+
+
+$font-size: 16px;//(product names)
+
+@font-face {
+  font-family: 'Red Hat';
+  src: url('../../assets/fonts/RedHatText-VariableFont_wght.ttf');
+}
+
+@mixin df($j:normal, $a:normal, $fl:row, $g:0) {
+  display: flex;
+  justify-content: $j;
+  align-items: $a;
+  flex-flow: $fl;
+  gap: $g;
+}

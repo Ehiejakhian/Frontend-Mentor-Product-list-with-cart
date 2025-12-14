@@ -1,0 +1,103 @@
+@use '../util/' as *;
+
+.cart {
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  @include df(normal, normal, column, 20px);
+  h2 {
+    color: var(--red);
+  }
+  &__items {
+    &.hidden {
+      display: none;
+    }
+  }
+  &__item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--rose-300);
+    &__description {
+      h4 {
+        width: 100%;
+        margin: 0 0 10px 0;
+        font-weight: 600;
+      }
+      &__times {
+        margin: 0 15px 0 0;
+        font-weight: 600;
+        color: var(--red);
+      }
+      &__price {
+        display: inline-block;
+        color: var(--rose-400);
+        margin: 0 5px 0 0;
+      }
+      &__times-price {
+        color: var(--rose-400);
+        font-weight: 600;
+        display: inline-block;
+      }
+    }
+    &__remove {
+      border: 2px solid;
+      color: var(--rose-300);
+      background: transparent;
+      width:  20px;
+      height: 20px;
+      padding: 2px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+  &__order {
+    @include df(space-between, center, row, 10px);
+    &__price {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    &.hidden {
+      display: none;
+    }
+  }
+  &__tip {
+    background-color: var(--rose-100);
+    padding: 20px;
+    border-radius: 10px;
+    @include df(center, center, row, 10px);
+    img {
+      width: auto;
+    }
+    &.hidden {
+      display: none;
+    }
+  }
+  .confirm__order {
+    font: inherit;
+    padding: 20px;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--red);
+    border: none;
+    cursor: pointer;
+    border-radius: 50px;
+    &.hidden {
+      display: none;
+    }
+  }
+  .no__order {
+    display: none;
+    &.show {
+      @include df(center, center, column, 20px);
+    }
+    img {
+      width: auto;
+    }
+    p {
+      font-weight: 600;
+      color: var(--rose-500);
+    }
+  }
+}
