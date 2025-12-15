@@ -1,6 +1,6 @@
 
 
-fetch('./data.json')
+fetch('scripts/data.json')
 .then(response => response.json())
 .then(data => {
   render(data);

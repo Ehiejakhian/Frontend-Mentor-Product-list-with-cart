@@ -22,7 +22,7 @@ $font-size: 16px;//(product names)
 
 @font-face {
   font-family: 'Red Hat';
-  src: url('../../assets/fonts/RedHatText-VariableFont_wght.ttf');
+  src: url('../assets/fonts/RedHatText-VariableFont_wght.ttf');
 }
 
 @mixin df($j:normal, $a:normal, $fl:row, $g:0) {

@@ -6,10 +6,14 @@
   &__pic {
     position: relative;
     border-radius: 20px;
+    border: 3px solid transparent;
+    transition: all .3s;
     @include df(center, center, column, 0);
     img {
-      //border: 3px solid var(--red);
       border-radius: inherit;
+    }
+    &.selected {
+      border: 3px solid var(--red);
     }
   }
   &__button {
