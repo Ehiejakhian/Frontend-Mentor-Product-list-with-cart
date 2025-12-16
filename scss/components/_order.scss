@@ -1,38 +1,96 @@
 @use '../util/' as *;
 
 .confirmedOrder {
+  padding: 20px;
   width: 600px;
   border: 2px solid;
   // @include df(normal, normal, column, 20px);
   img {
     width: auto;
   }
+  & h1 {
+    margin: 0 0 10px 0;
+    color: var(--gray-700);
+  }
   >p {
     color: var(--rose-400);
+    margin: 0 0 20px 0;
   }
   &__items {
     padding: 20px;
+    border-radius: 10px 10px 0 0;
     background-color: var(--rose-100);
   }
   &__item {
+    border-bottom: 1px solid var(--rose-300);
+    padding: 20px 0;
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 50px 1fr auto;
+    align-items: center;
     gap: 20px;
     img {
       width: 100%;
+      border-radius: 5px;
     }
     &__description {
-      display: grid;
-      grid-template-columns: 1fr 100px;
-      >* {
-        border: 1px solid;
-      }
       &__name {
+        color: var(--gray-700);
+        margin: 0 0 10px 0;
+        font-weight: 500;
+        line-height: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 200px;
+      }
+      &__times {
+        color: var(--red);
         font-weight: 700;
+        display: inline-block;
+        margin: 0 20px 0 0;
+        line-height: 1;
       }
-      &__timesPrice {
-        //Continue from here
+      &__price {
+        line-height: 1;
+        display: inline-block;
+        color: var(--rose-400);
       }
+    }
+    &__timesPrice {
+      font-weight: 600;
+      color: var(--gray-700);
+      font-size: 18px;
+    }
+  }
+  &__total {
+    border-radius: 0 0 10px 10px;
+    background-color: var(--rose-100);
+    padding: 20px;
+    @include df(space-between, center);
+    &__text {
+      color: var(--gray-700);
+      font-weight: 500;
+    }
+    &__price {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--gray-700);
+    }
+  }
+  &__btn {
+    margin-top: 30px;
+    width: 100%;
+    padding: 15px 0;
+    background-color: var(--red);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: hsl(14, 86%, 32%);
     }
   }
 }
