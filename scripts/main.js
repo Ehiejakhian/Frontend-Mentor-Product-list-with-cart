@@ -1,10 +1,16 @@
 
-fetch('scripts/data.json')
-.then(response => response.json())
-.then(data => {
-  setupExtraProps(data);
-  //localStorage.setItem('data', JSON.stringify(data));
-});
+  loadData();
+
+export function loadData() {
+  console.log('Loading Data again')
+  parsefromLocalStorage();
+  fetch('scripts/data.json')
+  .then(response => response.json())
+  .then(data => {
+    setupExtraProps(data);
+    //localStorage.setItem('data', JSON.stringify(data));
+  });
+}
 
 function setupExtraProps(data) {
   // Add properties to each item object
@@ -134,8 +140,11 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
 }
 
 let cartItems = [];
+
+
 //Check if local storage has the cartdata already and fetch it from there
-setTimeout(()=>{
+export function parsefromLocalStorage() {
+  setTimeout(()=>{
   console.log(JSON.parse(localStorage.getItem('cartItems')))
   if (localStorage.getItem('cartItems')) {
     cartItems = JSON.parse(localStorage.getItem('cartItems'));
@@ -150,8 +159,27 @@ setTimeout(()=>{
       setTheButtons(DOMElem, item.id, item, DOMElemCheckbox, DOMAddbtn, DOMRemoveBtn, 'display');
       displayCart(item)
     })
+  } else if (!(localStorage.getItem('cartItems'))) {
+    console.log('Empty')
+    let DOMItemElements = document.querySelectorAll('.item');
+    DOMItemElements.forEach((item,index) => {
+      console.log(index)
+      const DOMElem = DOMItemElements[index];
+      const DOMElemCheckbox = DOMElem.querySelector('.cart-checkbox');
+      const DOMAddbtn = DOMElem.querySelector('#add');
+      const DOMRemoveBtn = DOMElem.querySelector('#remove');
+      
+      setTheButtons(DOMElem, index, {}, DOMElemCheckbox, DOMAddbtn, DOMRemoveBtn, 'remove');
+      let cat = document.querySelector('.cart>h2')
+      cat.textContent = 0;
+      let tt = [];
+      tt.length = 0;
+      renderCartItemsOnDOM(cat,{},tt);
+    })
   }
 }, 100)
+}
+
 let cartItemTemplate = document.querySelector('template#cartItemTemplate');
 let cartTemplateContent = cartItemTemplate.content;
 

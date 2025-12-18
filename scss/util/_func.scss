@@ -6,3 +6,8 @@
 @function rem($px, $base: 16) {
   @return #{$px / $base}rem;
 }
+
+// @function transparentizeColor($color) {
+//   $alpha: getalpha($color);
+//   @return rgba($color, $alpha);
+// }
