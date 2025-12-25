@@ -1,16 +1,21 @@
+// import { data } from "jquery";
 
-  loadData();
+parsefromLocalStorage();
+loadData();
 
-export function loadData() {
-  console.log('Loading Data again')
-  parsefromLocalStorage();
+function loadData() {
+  console.log('Loading data...');
+  let dataVar = [];
   fetch('scripts/data.json')
   .then(response => response.json())
   .then(data => {
     setupExtraProps(data);
+    data = data;
     //localStorage.setItem('data', JSON.stringify(data));
   });
+  return dataVar;
 }
+
 
 function setupExtraProps(data) {
   // Add properties to each item object
@@ -90,52 +95,16 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
     displayCart(item)
     checkbox.parentNode.parentNode.classList.remove('selected')
   } else if (whatToDo == 'display') {
-    checkbox.parentNode.parentNode.classList.add('selected')
-    itemElement.querySelector('.counter').classList.add('counter-ON')
-    itemElement.querySelector('.amount').textContent = item.quantity;
-
-    checkbox.addEventListener('change', () => {
-      itemElement.querySelector('.counter').classList.add('counter-ON')
-      item.inCart = true;
-      item.quantity = 1//checkbox.checked ? 1 : 0;
-      console.log(cartItems)
-      console.log(`${item.name}: inCart=${item.inCart}, quantity=${item.quantity}`);
-      displayCart(item)
+    let data = loadData();
+    console.log(data)
+    if (item.inCart == true && item.quantity > 0) {
       checkbox.parentNode.parentNode.classList.add('selected')
-    });
-
-    // Listen to increment button
-    if (addBtn) {
-      addBtn.addEventListener('click', () => {
-        item.inCart = true;
-        if (item.inCart) {
-          item.quantity++;
-          itemElement.querySelector('.amount').textContent = item.quantity;
-          console.log(`${item.name}: quantity=${item.quantity}`);
-        }
-        displayCart(item)
-      });
+      itemElement.querySelector('.counter').classList.add('counter-ON')
+      itemElement.querySelector('.amount').textContent = item.quantity;
+      checkbox.parentNode.parentNode.classList.add('selected')
     }
-
-    // Listen to decrement button
-    if (removeBtn) {
-      removeBtn.addEventListener('click', () => {
-        console.log(item)
-        if (item.inCart && item.quantity > 1) {
-          item.quantity--;
-          itemElement.querySelector('.amount').textContent = item.quantity;
-          console.log(`${item.name}: quantity=${item.quantity}`);
-          displayCart(item)
-        } else if(item.quantity == 1) {
-          item.quantity--;
-          item.inCart = false;
-          itemElement.querySelector('.counter').classList.remove('counter-ON')
-          console.log(`${item.name}: quantity=${item.quantity}`);
-          checkbox.parentNode.parentNode.classList.remove('selected')
-          displayCart(item)
-        }
-      });
-    }
+    //setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, 'listen');
+    displayCart(item)
   }
 }
 

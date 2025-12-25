@@ -1,5 +1,5 @@
 console.clear()
-import { loadData } from "/scripts/main.js";
+//import { loadData } from "/scripts/main.js";
 
 let The_Boss = document.querySelector('main');
 let confirmElem = document.createElement('section');
@@ -23,6 +23,7 @@ confirmElem.innerHTML = `
 
 /* Listen for the press of the confirm Order btn */
 document.querySelector('.confirm__order').addEventListener('click', () => {
+  console.log('Confirm Order Clicked');
   The_Boss.appendChild(confirmElem)
   let itemList = confirmElem.querySelector('.confirmedOrder__items');
   let cart = JSON.parse(localStorage.getItem('cartItems'));
@@ -54,7 +55,7 @@ if (startNeworder) {
   startNeworder.addEventListener('click', ()=>{
     console.log('appear and disappear');
     localStorage.removeItem('cartItems')
-    loadData();
+    /////////////////////////////////loadData();
     if (confirmElem && The_Boss.contains(confirmElem)) {
       The_Boss.removeChild(confirmElem)
     }
@@ -69,3 +70,5 @@ if (modalOverlay) {
     })
   })
 }
+
+console.log('confirm.js loaded');
