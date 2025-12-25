@@ -2,7 +2,7 @@
 loadData();
 display_LocalStorage_CartItems();
 
-function loadData() {
+export function loadData() {
   console.log('Loading data...');
   //If data is in local storage use it for all the stuff
   if (localStorage.getItem('data')) {
@@ -52,7 +52,7 @@ function setUpEventListeners(data) {
       //Still listen to the buttons
       setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, 'listen');
     });
-  }, 100);
+  }, 1000);
 }
 
 function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, whatToDo) {
@@ -159,6 +159,7 @@ export function display_LocalStorage_CartItems() {
     cartItems.forEach(item=>{
       console.log(item.id)
       const DOMElem = DOMItemElements[item.id];
+      console.log(DOMElem)
       const DOMElemCheckbox = DOMElem.querySelector('.cart-checkbox');
       const DOMAddbtn = DOMElem.querySelector('#add');
       const DOMRemoveBtn = DOMElem.querySelector('#remove');
@@ -184,7 +185,7 @@ export function display_LocalStorage_CartItems() {
       renderCartItemsOnDOM(cat,{},tt);
     })
   }
-}, 100)
+}, 1000)
 }
 
 let cartItemTemplate = document.querySelector('template#cartItemTemplate');
@@ -223,7 +224,7 @@ function addOrRemoveItem__Cart(item) {
   return item;
 }
 
-function renderCartItemsOnDOM(cartHeading, cartGrid, cartItems) {
+export function renderCartItemsOnDOM(cartHeading, cartGrid, cartItems) {
   let total = 0;
   cartHeading.textContent =`Your Cart (${cartItems.length})`;
   if (cartItems.length > 0) {
@@ -280,4 +281,8 @@ function removeItemFromDOM(item) {
 }
 
 //Render empty of full cart
-//renderCartItemsOnDOM(document.querySelector('.cart>h2'),document.querySelector('.cart__items'),JSON.parse(localStorage.getItem('cartItems')));
+if (localStorage.getItem('cartItems')) {
+  renderCartItemsOnDOM(document.querySelector('.cart>h2'),document.querySelector('.cart__items'),JSON.parse(localStorage.getItem('cartItems')));
+} else {
+  renderCartItemsOnDOM(document.querySelector('.cart>h2'),document.querySelector('.cart__items'),[]);
+}

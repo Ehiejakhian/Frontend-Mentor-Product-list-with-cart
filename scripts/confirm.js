@@ -1,5 +1,7 @@
 // console.clear()
-//import { loadData } from "/scripts/main.js";
+import { loadData } from "./main.js";
+import { display_LocalStorage_CartItems } from "./main.js";
+import {renderCartItemsOnDOM} from "./main.js";
 
 let The_Boss = document.querySelector('main');
 let confirmElem = document.createElement('section');
@@ -54,8 +56,13 @@ let modalOverlay = confirmElem.querySelector('.modal-overlay');
 if (startNeworder) {
   startNeworder.addEventListener('click', ()=>{
     console.log('appear and disappear');
+    //Restart the app
     localStorage.removeItem('cartItems')
-    /////////////////////////////////loadData();
+    localStorage.removeItem('data')
+    loadData();
+    display_LocalStorage_CartItems();
+    renderCartItemsOnDOM(document.querySelector('.cart>h2'),document.querySelector('.cart__items'),[]);
+    //Remove the confirmElem from DOM
     if (confirmElem && The_Boss.contains(confirmElem)) {
       The_Boss.removeChild(confirmElem)
     }
