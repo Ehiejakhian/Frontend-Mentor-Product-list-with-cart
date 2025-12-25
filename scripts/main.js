@@ -1,4 +1,3 @@
-// import { data } from "jquery";
 loadData();
 display_LocalStorage_CartItems();
 
@@ -72,7 +71,8 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
       displayCart(item)
       //update item in localStorage
       //I'm sure that index is the corrsponding identifier of item because of the assignment on setupeventlisteners()
-      data[index] = item;
+      console.log(item)
+      data[index] = {...data[index], ...item};
       localStorage.setItem('data',JSON.stringify(data));
     });
 
@@ -86,7 +86,7 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
           console.log(`${item.name}: quantity=${item.quantity}`);
           displayCart(item)
           //Update item in data array and save back to local storage
-          data[index] = item;
+          data[index] = {...data[index], ...item};
           localStorage.setItem('data',JSON.stringify(data));
         }
       });
@@ -102,7 +102,7 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
           console.log(`${item.name}: quantity=${item.quantity}`);
           displayCart(item)
           //Update item in data array and save back to local storage
-          data[index] = item;
+          data[index] = {...data[index], ...item};
           localStorage.setItem('data',JSON.stringify(data));
         } else if(item.quantity == 1) {
           item.quantity--;
@@ -112,7 +112,7 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
           checkbox.parentNode.parentNode.classList.remove('selected')
           displayCart(item)
           //Update item in data array and save back to local storage
-          data[index] = item;
+          data[index] = {...data[index], ...item};
           localStorage.setItem('data',JSON.stringify(data));
         }
       });
@@ -124,7 +124,7 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
     checkbox.parentNode.parentNode.classList.remove('selected')
     displayCart(item)
     //Update item in data array and save back to local storage
-    data[index] = item;
+    data[index] = {...data[index], ...item};
     localStorage.setItem('data',JSON.stringify(data));
   } else if (whatToDo == 'display') {
     if (item.inCart == true && item.quantity > 0) {
@@ -133,7 +133,7 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
       itemElement.querySelector('.amount').textContent = item.quantity;
       checkbox.parentNode.parentNode.classList.add('selected')
       //Update item in data array and save back to local storage
-      data[index] = item;
+      data[index] = {...data[index], ...item};
       localStorage.setItem('data',JSON.stringify(data));
       //display in cart for the local storage data items from setupeventlisteners
       displayCart(item)
@@ -157,16 +157,14 @@ export function display_LocalStorage_CartItems() {
     cartItems = JSON.parse(localStorage.getItem('cartItems'));
     let DOMItemElements = document.querySelectorAll('.item');
     cartItems.forEach(item=>{
-      console.log(item.id)
       const DOMElem = DOMItemElements[item.id];
-      console.log(DOMElem)
       const DOMElemCheckbox = DOMElem.querySelector('.cart-checkbox');
       const DOMAddbtn = DOMElem.querySelector('#add');
       const DOMRemoveBtn = DOMElem.querySelector('#remove');
       
       setTheButtons(DOMElem, item.id, item, DOMElemCheckbox, DOMAddbtn, DOMRemoveBtn, 'display');
       displayCart(item)
-    })
+    });
   } else if (!(localStorage.getItem('cartItems'))) {
     console.log('Empty')
     let DOMItemElements = document.querySelectorAll('.item');
