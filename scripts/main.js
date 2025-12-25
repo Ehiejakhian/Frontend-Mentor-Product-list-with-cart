@@ -1,33 +1,42 @@
 // import { data } from "jquery";
-
-parsefromLocalStorage();
 loadData();
+display_LocalStorage_CartItems();
 
 function loadData() {
   console.log('Loading data...');
-  let dataVar = [];
-  fetch('scripts/data.json')
-  .then(response => response.json())
-  .then(data => {
-    setupExtraProps(data);
-    data = data;
-    //localStorage.setItem('data', JSON.stringify(data));
-  });
-  return dataVar;
+  //If data is in local storage use it for all the stuff
+  if (localStorage.getItem('data')) {
+    setupExtraProps(JSON.parse(localStorage.getItem('data')), true);
+  } // Else if its not in local storage, save it there and start using it
+  else {
+    fetch('scripts/data.json')
+    .then(response => response.json())
+    .then(data => {
+      setupExtraProps(data, false);
+      localStorage.setItem('data', JSON.stringify(data));
+    });
+  }
 }
 
 
-function setupExtraProps(data) {
-  // Add properties to each item object
-  data.forEach((item, index) => {
-    item.id = index;
-    item.inCart = false;
-    item.quantity = 0;
-  });
+function setupExtraProps(data, exists) {
+  //If it did't exist before, add these properties
+  if (!exists) {
+    data.forEach((item, index) => {
+      item.id = index;
+      item.inCart = false;
+      item.quantity = 0;
+    });
+    //Modify the object in local storage
+    localStorage.setItem('data', JSON.stringify(data));
+  }
+  // If it exists in local storage before, no need to add properties to each item object
+  console.log('data is in local storage: ', exists)
   setUpEventListeners(data)
 }
 
 function setUpEventListeners(data) {
+  console.log(data)
   // Wait for DOM to be ready, then add listeners
   setTimeout(() => {
     const itemsElem = document.querySelectorAll('.item');
@@ -36,24 +45,35 @@ function setUpEventListeners(data) {
       const checkbox = itemElement.querySelector('.cart-checkbox');
       const addBtn = itemElement.querySelector('#add');
       const removeBtn = itemElement.querySelector('#remove');
-
+      //if item is already in cart display to prevent activation of checkbox from erasing its quantity in localStorage
+      if (item.inCart) {
+        setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, 'display');
+      }
+      //Still listen to the buttons
       setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, 'listen');
-      localStorage.setItem('data', JSON.stringify(data));
     });
   }, 100);
 }
 
 function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, whatToDo) {
+  //Get data from local storage to update its item properties ans save it back. For now just collect it.
+  let data = JSON.parse(localStorage.getItem('data'))
+
   if (whatToDo == 'listen') {
     // Listen to checkbox (Add to Cart)
     checkbox.addEventListener('change', () => {
       itemElement.querySelector('.counter').classList.add('counter-ON')
+      checkbox.parentNode.parentNode.classList.add('selected')
       item.inCart = true;
       item.quantity = 1//checkbox.checked ? 1 : 0;
-      console.log(cartItems)
+      itemElement.querySelector('.amount').textContent = item.quantity;
       console.log(`${item.name}: inCart=${item.inCart}, quantity=${item.quantity}`);
+      //display item in cart
       displayCart(item)
-      checkbox.parentNode.parentNode.classList.add('selected')
+      //update item in localStorage
+      //I'm sure that index is the corrsponding identifier of item because of the assignment on setupeventlisteners()
+      data[index] = item;
+      localStorage.setItem('data',JSON.stringify(data));
     });
 
     // Listen to increment button
@@ -64,8 +84,11 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
           item.quantity++;
           itemElement.querySelector('.amount').textContent = item.quantity;
           console.log(`${item.name}: quantity=${item.quantity}`);
+          displayCart(item)
+          //Update item in data array and save back to local storage
+          data[index] = item;
+          localStorage.setItem('data',JSON.stringify(data));
         }
-        displayCart(item)
       });
     }
 
@@ -78,6 +101,9 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
           itemElement.querySelector('.amount').textContent = item.quantity;
           console.log(`${item.name}: quantity=${item.quantity}`);
           displayCart(item)
+          //Update item in data array and save back to local storage
+          data[index] = item;
+          localStorage.setItem('data',JSON.stringify(data));
         } else if(item.quantity == 1) {
           item.quantity--;
           item.inCart = false;
@@ -85,6 +111,9 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
           console.log(`${item.name}: quantity=${item.quantity}`);
           checkbox.parentNode.parentNode.classList.remove('selected')
           displayCart(item)
+          //Update item in data array and save back to local storage
+          data[index] = item;
+          localStorage.setItem('data',JSON.stringify(data));
         }
       });
     }
@@ -92,27 +121,36 @@ function setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, wh
     itemElement.querySelector('.counter').classList.remove('counter-ON')
     item.inCart = false;
     item.quantity = 0;
-    displayCart(item)
     checkbox.parentNode.parentNode.classList.remove('selected')
+    displayCart(item)
+    //Update item in data array and save back to local storage
+    data[index] = item;
+    localStorage.setItem('data',JSON.stringify(data));
   } else if (whatToDo == 'display') {
-    let data = loadData();
-    console.log(data)
     if (item.inCart == true && item.quantity > 0) {
       checkbox.parentNode.parentNode.classList.add('selected')
       itemElement.querySelector('.counter').classList.add('counter-ON')
       itemElement.querySelector('.amount').textContent = item.quantity;
       checkbox.parentNode.parentNode.classList.add('selected')
+      //Update item in data array and save back to local storage
+      data[index] = item;
+      localStorage.setItem('data',JSON.stringify(data));
+      //display in cart for the local storage data items from setupeventlisteners
+      displayCart(item)
+    } else {
+      itemElement.querySelector('.counter').classList.remove('counter-ON')
+      item.inCart = false;
+      item.quantity = 0;
+      checkbox.parentNode.parentNode.classList.remove('selected')
     }
-    //setTheButtons(itemElement, index, item, checkbox, addBtn, removeBtn, 'listen');
-    displayCart(item)
   }
 }
 
 let cartItems = [];
 
-
+///Now I'm using a whole different object for cart data
 //Check if local storage has the cartdata already and fetch it from there
-export function parsefromLocalStorage() {
+export function display_LocalStorage_CartItems() {
   setTimeout(()=>{
   console.log(JSON.parse(localStorage.getItem('cartItems')))
   if (localStorage.getItem('cartItems')) {
@@ -154,7 +192,7 @@ let cartTemplateContent = cartItemTemplate.content;
 
 function displayCart(item) {
   let cartHeading = document.querySelector('.cart>h2');
-  let cartGrid = document.querySelector('.cart__items')
+  let cartGrid = document.querySelector('.cart__items');
   cartGrid.innerHTML = "";
 
   addOrRemoveItem__Cart(item);
@@ -241,3 +279,5 @@ function removeItemFromDOM(item) {
   setTheButtons(itemElement, itemElemIndex, dataItem, checkbox, addBtn, removeBtn, 'remove');
 }
 
+//Render empty of full cart
+//renderCartItemsOnDOM(document.querySelector('.cart>h2'),document.querySelector('.cart__items'),JSON.parse(localStorage.getItem('cartItems')));

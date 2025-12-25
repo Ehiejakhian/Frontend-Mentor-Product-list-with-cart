@@ -1,4 +1,4 @@
-console.clear()
+// console.clear()
 //import { loadData } from "/scripts/main.js";
 
 let The_Boss = document.querySelector('main');
@@ -71,4 +71,4 @@ if (modalOverlay) {
   })
 }
 
-console.log('confirm.js loaded');
+//console.log('confirm.js loaded');
