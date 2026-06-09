@@ -67,10 +67,13 @@ main {
     .cart {
       grid-column: span 1;
       grid-row: span 2;
-      height: auto;
+      height: fit-content;
       // grid-column-start: -1;
       // grid-row-start: -1;
     }
+    // >* {
+    //   border: 2px solid #000;
+    // }
   }
 }
 

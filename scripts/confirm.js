@@ -3,6 +3,7 @@ import { loadData } from "./main.js";
 import { display_LocalStorage_CartItems } from "./main.js";
 import {renderCartItemsOnDOM} from "./main.js";
 
+
 let The_Boss = document.querySelector('main');
 let confirmElem = document.createElement('section');
 confirmElem.classList.add('confirmedOrder');
@@ -57,11 +58,11 @@ if (startNeworder) {
   startNeworder.addEventListener('click', ()=>{
     console.log('appear and disappear');
     //Restart the app
-    localStorage.removeItem('cartItems')
-    localStorage.removeItem('data')
+    localStorage.removeItem('cartItems');
+    localStorage.removeItem('data');////
     loadData();
     display_LocalStorage_CartItems();
-    renderCartItemsOnDOM(document.querySelector('.cart>h2'),document.querySelector('.cart__items'),[]);
+    renderCartItemsOnDOM(document.querySelector('.cart>h2'), document.querySelector('.cart__items'), []);
     //Remove the confirmElem from DOM
     if (confirmElem && The_Boss.contains(confirmElem)) {
       The_Boss.removeChild(confirmElem)
